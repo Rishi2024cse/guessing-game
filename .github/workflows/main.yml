@@ -1,0 +1,16 @@
+name: Generate README
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run make
+        run: make
+      - name: Commit README
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Auto-update README via Makefile" || echo "No changes"
+          git push
